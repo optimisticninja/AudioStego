@@ -1,51 +1,57 @@
-#include <string>
 #include <boost/algorithm/string.hpp>
 #include "CustomHeader.h"
 
-CustomHeader::CustomHeader(char* header) {
+CustomHeader::CustomHeader(char* header) 
+{
     // Set modulus first
     char* bytes = new char[4];
     for (int i = 0; i < 4; i++)
         bytes[i] = header[i];
 
-    mModulus = *reinterpret_cast<int*>(bytes);
+    _modulus = *reinterpret_cast<int*>(bytes);
 
     // Set extension
     char* ext = new char[4];
     for (int y = 0, i = 4; i < 8; i++, y++)
         ext[y] = header[i];
 
-    mExtension = std::string(ext);
-    boost::algorithm::trim(mExtension);
+    _extension = string(ext);
+    boost::algorithm::trim(_extension);
 
     // Set type
-    mType = header[8];
+    _type = header[8];
 
     delete[] bytes;
     delete[] ext;
 }
 
-CustomHeader::CustomHeader() {
+CustomHeader::CustomHeader() 
+{
     // Initialize the variables
     return;
 }
 
-int CustomHeader::GetModulus() {
-    return this->mModulus;
+int CustomHeader::modulus() 
+{
+    return this->_modulus;
 }
 
-std::string CustomHeader::GetExtension() {
-    return this->mExtension;
+string CustomHeader::extension() 
+{
+    return this->_extension;
 }
 
-char CustomHeader::GetType() {
-    return this->mType;
+char CustomHeader::type() 
+{
+    return this->_type;
 }
 
-int CustomHeader::GetLastPosition() {
-    return this->mLastPos;
+int CustomHeader::last_position() 
+{
+    return this->_last_pos;
 }
 
-void CustomHeader::SetLastPosition(int n) {
-    this->mLastPos = n;
+void CustomHeader::last_position(int n) 
+{
+    this->_last_pos = n;
 }

@@ -1,34 +1,25 @@
-// guard header
-#ifndef __ALGORITHM_H_INCLUDED__
-#define __ALGORITHM_H_INCLUDED__
-
-#define SUCCESS 1
-#define ERROR 2
-#define DEF_MODULE 64 // The bigger the module, the more spread(?) the message
-#define WAV_HEADER 44
-#define MY_HEADER_MODULE 64
-#define START_SPACE 0 // Space skipped in order to dont put a message at the starts of the songs
-/**
-* My custom header with the attributes of the file to retireve:
-* 4 bytes for modulus value
-* 4 for file extension
-* 1 byte for the type of message to find (text or binary)
-* */
-#define MY_HEADER 9
+#pragma once
 
 #include <vector>
 #include <string>
 #include <fstream>
 #include "CustomHeader.h"
 
-void CreateHeader(long& modulus, char* modulusBytes, char* customHeader, std::string& fileExtension, bool isBinaryType);
-int OutputBinFile(std::vector<char>& buffer, CustomHeader& cHeader);
-int OutputBindedData(std::vector<char>& buffer, std::string& extension);
-int WriteMessageFromEnd(std::vector<char>& buffer, std::string msg);
-int PlayWithWaveBuffer(std::vector<char>& buffer, std::string& msg, std::string& inputExt);             // Hide a string
-int PlayWithWaveBuffer(std::vector<char>& buffer, std::vector<char>& fileMsg, std::string& fileExtension, std::string& inputExt);  // Hide a binary file
-int FindHiddenTextInWave(std::vector<char>& buffer, CustomHeader& customHeader);
-int FindHiddenBinaryInWave(std::vector<char>& buffer, CustomHeader& customHeader);
-int FindHiddenMessage(std::vector<char>& buffer);
+using std::string;
+using std::vector;
 
-#endif // __ALGORITHM_H_INCLUDED__
+typedef enum {
+    SUCCESS,
+    ERROR
+} status;
+
+void create_header(long int& modulus, char* modulus_bytes, char* custom_header, string& file_extension, bool is_file);
+status output_file(vector< char >& buffer, CustomHeader& custom_header);
+status output_stegged_data(vector< char >& buffer, string& fileExtension);
+status write_message_from_end(vector< char >& buffer, string msg);
+status play_with_wave_buf(vector<char>& buffer, string& msg, string& input_ext);             // Hide a string
+status play_with_wave_buf(vector<char>& buffer, vector< char >& file_msg, string& file_extension, string& input_ext);  // Hide a binary file
+status find_hidden_text_in_wave(vector<char>& buffer, CustomHeader& customHeader);
+status find_hidden_file_in_wave(vector<char>& buffer, CustomHeader& custom_header);
+status find_hidden_message(vector<char>& buffer);
+

@@ -1,11 +1,9 @@
-// guard header
-#ifndef __MAIN_H_INCLUDED__
-#define __MAIN_H_INCLUDED__
+#pragma once
 
 #include <vector>
 #include <string>
 #include <fstream>
 
-std::string GetFileExtension(const std::string& fileName);
+using std::string;
 
-#endif // __MAIN_H_INCLUDED__
+string get_file_extension(const string& fname);
